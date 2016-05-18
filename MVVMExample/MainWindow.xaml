@@ -5,8 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVMExample"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MVVMExample" Height="400" Width="400">
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="grid1" Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center" Text="{Binding Left, UpdateSourceTrigger=PropertyChanged}" />
+            <!--<Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center" Content="+" />-->
+            <ComboBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ItemsSource="{Binding Operations}" SelectedItem="{Binding SelectedOperation}" IsSynchronizedWithCurrentItem="True" />
+            <TextBox Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Center" VerticalAlignment="Center" Text="{Binding Right, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Center" VerticalAlignment="Center" Content="=" />
+            <TextBlock Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Result, Mode=OneWay}" />
+
+            <Button Grid.Row="1" Grid.ColumnSpan="5" Margin="5" Command="{Binding AddCommand}">?</Button>
+        </Grid>
+
+        <Grid x:Name="grid2" Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding AddCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Grid.Row="1" Content="+" Command="{Binding AddCommand}" />
+            <ListBox Grid.Row="2" ItemsSource="{Binding ListItems}" SelectedItem="{Binding ListSelectedItem}">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Remove" Command="{Binding RemoveCommand}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+            <Button Grid.Row="3" Content="AsyncTask" Command="{Binding AsyncCommand}" />
+        </Grid>
     </Grid>
 </Window>
